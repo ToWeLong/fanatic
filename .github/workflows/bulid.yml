@@ -1,0 +1,22 @@
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@master
+        with:
+          go-version: 1.14
+        id: go
+
+      - uses: actions/checkout@v2
+
+      - name: download
+        run: |
+          go mod download
+          go test fanatic/test
+          go build fanatic
+          ./fanatic
