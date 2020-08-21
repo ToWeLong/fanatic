@@ -1,0 +1,34 @@
+on:
+  push:
+    branches:
+      - master
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@master
+          with:
+            go-version: 1.14
+          id: go
+
+        - uses: actions/checkout@v2
+        - name: Bulid Image
+          env:
+            DockerUser: ${{ secrets.DOCKER_USERNAME }}
+            DockerPassword: ${{ secrets.DOCKER_PASSWORD }}
+          run: |
+            docker login -u $DockerUsername -p $DockerPassword
+            docker build -t welong/fanatic .
+            docker push welong/fanatic
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [publish]
+    steps:
+      - uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USERNAME }}
+          password: ${{ secrets.DEPLOY_PASSWORD }}
+          port: 22
+          script: cd go_server && ./deploy.sh
