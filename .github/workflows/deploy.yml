@@ -20,8 +20,8 @@ jobs:
           DockerPassword: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           docker login -u $DockerUsername -p $DockerPassword
-          docker build -t fanatic .
-          docker push fanatic
+          docker build -t welong/fanatic .
+          docker push welong/fanatic
   deploy:
     runs-on: ubuntu-latest
     needs: [publish]
