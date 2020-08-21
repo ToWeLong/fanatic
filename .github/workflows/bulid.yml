@@ -7,9 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Start Redis
-      uses: supercharge/redis-github-action@1.1.0
-      with:
-        redis-version: 3.2.1
+        uses: supercharge/redis-github-action@1.1.0
+        with:
+          redis-version: 3.2.1
 
       - name: Shutdown Ubuntu MySQL (SUDO)
         run: sudo service mysql stop
