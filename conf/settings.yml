@@ -1,6 +1,4 @@
 runmode: debug
-# prod or dev
-env: prod
 
 port: :8081
 name: fanatic

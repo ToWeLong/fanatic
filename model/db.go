@@ -23,7 +23,7 @@ func Init() {
 
 func InitMysql() *gorm.DB {
 	// "%s:%s@(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local"
-	if viper.GetString("env") == "dev" {
+	if os.Getenv("ENV") == "dev" {
 		addr = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 			viper.GetString("db.username"),
 			viper.GetString("db.password"),
