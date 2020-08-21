@@ -6,5 +6,5 @@ RUN go build -o app
 FROM alpine:latest AS production
 WORKDIR /root/
 COPY --from=development /go/src/app .
-EXPOSE 8081
+EXPOSE 8080
 ENTRYPOINT ["./app"]
