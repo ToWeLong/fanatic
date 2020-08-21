@@ -1,10 +1,6 @@
-FROM golang:alpine AS development
+FROM golang:alpine
 WORKDIR $GOPATH/src
-COPY . .
-RUN go build -o app
-
-FROM alpine:latest AS production
-WORKDIR /root/
-COPY --from=development /go/src/app .
-EXPOSE 8080
-ENTRYPOINT ["./app"]
+ADD . $GOPATH/src/godocker
+RUN go build fanatic.go
+EXPOSE 8081
+ENTRYPOINT ["./fanatic"]
