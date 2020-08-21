@@ -16,6 +16,7 @@ import (
 
 func main() {
 
+	// 读取环境配置
 	godotenv.Load()
 
 	if err := config.Init(); err != nil {
