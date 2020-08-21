@@ -17,6 +17,7 @@ import (
 func main() {
 
 	godotenv.Load()
+
 	if err := config.Init(); err != nil {
 		log.Error(err)
 	}
