@@ -6,9 +6,12 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
+	"os"
+	"strconv"
 )
 
 var (
+	addr string
 	DB *gorm.DB
 )
 
@@ -20,21 +23,34 @@ func Init() {
 
 func InitMysql() *gorm.DB {
 	// "%s:%s@(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local"
-	addr := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
-		viper.GetString("db.username"),
-		viper.GetString("db.password"),
-		viper.GetString("db.host"),
-		viper.GetInt("db.port"),
-		viper.GetString("db.name"),
-	)
+	if viper.GetString("env") == "dev" {
+		addr = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+			viper.GetString("db.username"),
+			viper.GetString("db.password"),
+			viper.GetString("db.host"),
+			viper.GetInt("db.port"),
+			viper.GetString("db.name"),
+		)
+	}else {
+		port,_ := strconv.Atoi(os.Getenv("DBPORT"))
+		addr = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+			os.Getenv("DBUSERNAME"),
+			os.Getenv("DBPASSWORD"),
+			os.Getenv("HOST"),
+			port,
+			os.Getenv("DBNAME"),
+		)
+	}
+
 
 	openDB, err := gorm.Open("mysql", addr)
 	if openDB != nil{
 		err = openDB.DB().Ping()
 		if err != nil {
 			logrus.Info("数据库连接错误~")
+		} else {
+			logrus.Info("数据库连接成功~")
 		}
-		logrus.Info("数据库连接成功~")
 	}
 
 	return openDB

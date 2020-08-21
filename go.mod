@@ -11,6 +11,7 @@ require (
 	github.com/go-playground/validator/v10 v10.3.0 // indirect
 	github.com/go-redis/redis/v8 v8.0.0-beta.7
 	github.com/jinzhu/gorm v1.9.15
+	github.com/joho/godotenv v1.3.0
 	github.com/json-iterator/go v1.1.10
 	github.com/magiconair/properties v1.8.1
 	github.com/pelletier/go-toml v1.8.0 // indirect

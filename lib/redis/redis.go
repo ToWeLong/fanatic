@@ -5,6 +5,8 @@ import (
 	"github.com/go-redis/redis/v8"
 	"github.com/spf13/viper"
 	"log"
+	"os"
+	"strconv"
 )
 
 var (
@@ -21,18 +23,18 @@ type RedisService interface {
 	Lpush(key string, value interface{}) error
 	Lindex(key string, index int64) (string, error)
 	Llen(key string) (int64, error)
-	Exists(key string) (int64,error)
+	Exists(key string) (int64, error)
 }
 
 type redisService struct {
 }
 
-func (r *redisService) Exists(key string) (int64,error) {
+func (r *redisService) Exists(key string) (int64, error) {
 	return RedisClient.Exists(Ctx, key).Result()
 }
 
-func (r *redisService) Llen(key string)(int64, error) {
-	return RedisClient.LLen(Ctx,key).Result()
+func (r *redisService) Llen(key string) (int64, error) {
+	return RedisClient.LLen(Ctx, key).Result()
 }
 
 func (r *redisService) Lindex(key string, index int64) (string, error) {
@@ -67,12 +69,26 @@ func NewRedis() RedisService {
 }
 
 func Init() {
-	RedisClient = redis.NewClient(&redis.Options{
-		Addr:     viper.GetString("redis.addr"),
-		Password: viper.GetString("redis.password"),
-		DB:       viper.GetInt("redis.db"),
-	})
-	log.Println("redis 连接成功~")
+	if viper.GetString("env") == "dev" {
+		RedisClient = redis.NewClient(&redis.Options{
+			Addr:     viper.GetString("redis.addr"),
+			Password: viper.GetString("redis.password"),
+			DB:       viper.GetInt("redis.db"),
+		})
+	} else {
+		db, _ := strconv.Atoi(os.Getenv("REDISDBNAME"))
+		RedisClient = redis.NewClient(&redis.Options{
+			Addr:     os.Getenv("REDISHOST"),
+			Password: os.Getenv("REDISPASSWORD"),
+			DB:       db,
+		})
+	}
+
+	if RedisClient.Ping(Ctx).Err() == nil {
+		log.Println("redis 连接成功~")
+	}else {
+		log.Println("redis 连接失败~")
+	}
 }
 
 func Close() {

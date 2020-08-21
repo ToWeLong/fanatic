@@ -9,12 +9,14 @@ import (
 	"fanatic/router"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
+	"github.com/joho/godotenv"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
 func main() {
 
+	godotenv.Load()
 	if err := config.Init(); err != nil {
 		log.Error(err)
 	}
