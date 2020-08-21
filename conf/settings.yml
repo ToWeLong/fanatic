@@ -1,0 +1,22 @@
+runmode: debug
+
+port: :8081
+name: fanatic
+
+db:
+  name: fanatic
+  host: 127.0.0.1
+  port: 3306
+  username: root
+  password: 123456789
+  log: true
+
+token:
+  access_expire_time: 2
+  refresh_expire_time: 24
+  secretKey: "CCbsch4j3b1XLaME"
+
+redis:
+  addr: localhost:6379
+  password: ""
+  db: 0
