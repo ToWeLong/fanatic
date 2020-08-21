@@ -4,6 +4,14 @@ on:
       - master
 jobs:
   build:
+    env:
+      HOST: ${{ secrets.HOST }}
+      DBNAME: ${{ secrets.DBNAME }}
+      DBPORT: ${{ secrets.DBPORT }}
+      DBUSERNAME: ${{ secrets.DBUSERNAME }}
+      DBPASSWORD: ${{ secrets.DBPASSWORD }}
+      REDISHOST: ${{ secrets.REDISHOST }}
+      REDISDBNAME: ${{ secrets.REDISDBNAME }}
     runs-on: ubuntu-latest
     steps:
       - name: Start Redis
