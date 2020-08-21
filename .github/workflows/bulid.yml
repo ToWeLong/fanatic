@@ -28,11 +28,8 @@ jobs:
 
       - uses: actions/checkout@v2
 
-      - name: download
+      - name: download and Test
         run: |
           go mod download
           go build fanatic
-          ./fanatic
-
-      - name: Test
-        run: go test fanatic/test
+          go test fanatic/test
