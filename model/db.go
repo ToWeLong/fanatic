@@ -6,6 +6,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
+	"log"
 	"os"
 	"strconv"
 )
@@ -24,6 +25,7 @@ func Init() {
 func InitMysql() *gorm.DB {
 	// "%s:%s@(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local"
 	if os.Getenv("ENV") == "dev" {
+		log.Println("开发环境")
 		addr = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 			viper.GetString("db.username"),
 			viper.GetString("db.password"),
@@ -32,6 +34,7 @@ func InitMysql() *gorm.DB {
 			viper.GetString("db.name"),
 		)
 	}else {
+		log.Println("生产环境")
 		port,_ := strconv.Atoi(os.Getenv("DBPORT"))
 		addr = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 			os.Getenv("DBUSERNAME"),

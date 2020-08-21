@@ -1,9 +1,11 @@
 package config
 
 import (
+	"fmt"
 	"github.com/fsnotify/fsnotify"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
+	"os"
 )
 
 type Config struct {
@@ -18,7 +20,9 @@ func Init() error {
 }
 
 func (c Config) initConfig() error{
-	viper.AddConfigPath("conf")
+	os.Getenv("home")
+	getPwd, _ := os.Getwd()
+	viper.AddConfigPath(fmt.Sprintf("%s/conf", getPwd))
 	viper.SetConfigName("settings")
 	viper.SetConfigType("yml")
 	viper.SetEnvPrefix("fanatic")
