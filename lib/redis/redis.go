@@ -69,7 +69,7 @@ func NewRedis() RedisService {
 }
 
 func Init() {
-	if os.Getenv("ENV") == "dev" {
+	if viper.GetString("env") == "dev" {
 		RedisClient = redis.NewClient(&redis.Options{
 			Addr:     viper.GetString("redis.addr"),
 			Password: viper.GetString("redis.password"),

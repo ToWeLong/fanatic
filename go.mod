@@ -13,11 +13,13 @@ require (
 	github.com/jinzhu/gorm v1.9.15
 	github.com/joho/godotenv v1.3.0
 	github.com/json-iterator/go v1.1.10
+	github.com/kr/fs v0.1.0 // indirect
 	github.com/magiconair/properties v1.8.1
 	github.com/pelletier/go-toml v1.8.0 // indirect
 	github.com/sirupsen/logrus v1.2.0
 	github.com/spf13/viper v1.7.1
 	github.com/stretchr/testify v1.6.1
+	github.com/tools/godep v0.0.0-20180126220526-ce0bfadeb516 // indirect
 	golang.org/x/crypto v0.0.0-20191205180655-e7c4368fe9dd
 	golang.org/x/sys v0.0.0-20200812155832-6a926be9bd1d // indirect
 	google.golang.org/protobuf v1.25.0 // indirect
