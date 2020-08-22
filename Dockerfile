@@ -3,12 +3,12 @@ WORKDIR /go/src
 COPY . .
 RUN go env -w GO111MODULE=on
 RUN go env -w GOPROXY=https://goproxy.io,direct
-RUN go build -o fanatic
+RUN CGO_ENABLED=0 go build -o App -a -ldflags="-w -s"
 
 FROM alpine:latest AS final
 MAINTAINER towelong <towelong@qq.com>
 WORKDIR /app
-COPY --from=builder /go/src/fanatic /app/fanatic
+COPY --from=builder /go/src/App /app/App
 COPY --from=builder /go/src/conf /app/conf
 EXPOSE 8081
-ENTRYPOINT ["/app/fanatic"]
+ENTRYPOINT ["/app"]
