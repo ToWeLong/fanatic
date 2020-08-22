@@ -41,6 +41,7 @@ func main() {
 		ctx.JSON(200, gin.H{
 			"api-version": "v1",
 			"author":      "welong",
+			"text":        "部署成功",
 		})
 	})
 
